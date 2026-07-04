@@ -6,12 +6,23 @@ gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
   
-  // Setup Smooth Scrollbar
+  // Setup Smooth Scrollbar (Desktop Only)
   const scroller = document.querySelector('#scroller');
-  const bodyScrollBar = Scrollbar.init(scroller, {
-    damping: 0.05,
-    delegateTo: document,
-  });
+  const isMobile = window.innerWidth <= 900;
+  let bodyScrollBar;
+
+  if (!isMobile) {
+    bodyScrollBar = Scrollbar.init(scroller, {
+      damping: 0.05,
+      delegateTo: document,
+    });
+  } else {
+    // Mobile native scrolling reset
+    if (scroller) {
+      scroller.style.height = 'auto';
+      scroller.style.overflow = 'visible';
+    }
+  }
 
   // Intercept anchor links for smooth scrolling
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -20,35 +31,40 @@ document.addEventListener('DOMContentLoaded', () => {
       const targetId = this.getAttribute('href').substring(1);
       const targetEl = document.getElementById(targetId);
       if (targetEl) {
-        // Adjust for floating header
-        const offset = targetEl.getBoundingClientRect().top + bodyScrollBar.scrollTop - 100;
-        bodyScrollBar.scrollTo(0, offset, 1000);
+        if (!isMobile && bodyScrollBar) {
+          const offset = targetEl.getBoundingClientRect().top + bodyScrollBar.scrollTop - 100;
+          bodyScrollBar.scrollTo(0, offset, 1000);
+        } else {
+          const offset = targetEl.getBoundingClientRect().top + window.scrollY - 100;
+          window.scrollTo({ top: offset, behavior: 'smooth' });
+        }
       }
     });
   });
 
-  // GSAP ScrollTrigger Proxy for Smooth Scrollbar
-  ScrollTrigger.scrollerProxy(scroller, {
-    scrollTop(value) {
-      if (arguments.length) {
-        bodyScrollBar.scrollTop = value;
-      }
-      return bodyScrollBar.scrollTop;
-    },
-    getBoundingClientRect() {
-      return {
-        top: 0,
-        left: 0,
-        width: window.innerWidth,
-        height: window.innerHeight
-      };
-    },
-    pinType: scroller.style.transform ? "transform" : "fixed"
-  });
+  // GSAP ScrollTrigger Proxy for Smooth Scrollbar (Desktop Only)
+  if (!isMobile && bodyScrollBar) {
+    ScrollTrigger.scrollerProxy(scroller, {
+      scrollTop(value) {
+        if (arguments.length) {
+          bodyScrollBar.scrollTop = value;
+        }
+        return bodyScrollBar.scrollTop;
+      },
+      getBoundingClientRect() {
+        return {
+          top: 0,
+          left: 0,
+          width: window.innerWidth,
+          height: window.innerHeight
+        };
+      },
+      pinType: scroller.style.transform ? "transform" : "fixed"
+    });
 
-  // Tell ScrollTrigger to update on smooth scrollbar update
-  bodyScrollBar.addListener(ScrollTrigger.update);
-  ScrollTrigger.defaults({ scroller: scroller });
+    bodyScrollBar.addListener(ScrollTrigger.update);
+    ScrollTrigger.defaults({ scroller: scroller });
+  }
 
   // 1. Hero Showcase Animations (index.html)
   if (document.querySelector('.hero-showcase')) {
@@ -288,5 +304,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setupVoiceCard('giovaani-play', 'giovaani-audio');
   setupVoiceCard('giovaani-play-dup', 'giovaani-audio-dup');
+
+  // 9. Lazy Loading Videos
+  const lazyVideos = document.querySelectorAll('.lazy-video');
+  if (lazyVideos.length > 0) {
+    const videoObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const video = entry.target;
+          video.src = video.dataset.src;
+          
+          video.addEventListener('loadeddata', () => {
+            const loader = video.parentElement.querySelector('.video-loader');
+            if (loader) {
+              loader.style.opacity = '0';
+              setTimeout(() => loader.remove(), 300);
+            }
+            video.style.opacity = '1';
+          });
+          
+          observer.unobserve(video);
+        }
+      });
+    }, { rootMargin: '0px 0px 800px 0px' }); // Load when within 800px of viewport
+
+    lazyVideos.forEach(video => {
+      video.style.opacity = '0';
+      video.style.transition = 'opacity 0.5s ease';
+      videoObserver.observe(video);
+    });
+  }
 
 });
