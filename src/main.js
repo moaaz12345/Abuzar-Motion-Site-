@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
       scroller.style.height = 'auto';
       scroller.style.overflow = 'visible';
     }
+    // FIX FOR ANDROID: Unlock the native scrollbar that was hidden in CSS
+    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = 'auto';
   }
 
   // Intercept anchor links for smooth scrolling

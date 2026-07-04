@@ -77,18 +77,29 @@ body {
   .logo {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: -0.02em;
-    color: var(--color-text);
-    background: linear-gradient(90deg, #fff, #aaa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    gap: 12px;
+    text-decoration: none;
     
-    i {
-      color: var(--color-accent);
-      -webkit-text-fill-color: initial;
+    img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+
+    .logo-text {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+      background: linear-gradient(90deg, #fff, #aaa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
   
@@ -883,16 +894,62 @@ body {
   }
   /* Adjust header for mobile */
   .luxury-header {
-    width: 90%;
-    padding: 12px 20px;
-    gap: 20px;
-    background: rgba(15, 10, 25, 0.95); /* Opaque fallback */
-    backdrop-filter: none; /* Disable expensive blur on mobile */
+    width: 95%;
+    padding: 12px 16px;
+    gap: 16px;
+    background: rgba(15, 10, 25, 0.95);
+    backdrop-filter: none;
     -webkit-backdrop-filter: none;
     
-    .logo { font-size: 1rem; }
-    nav { gap: 12px; a { font-size: 0.8rem; } }
+    .logo {
+      gap: 8px;
+      img { height: 24px; }
+      .logo-text { font-size: 1rem; }
+    }
+    
+    nav { 
+      gap: 20px; 
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 2px;
+      
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      
+      a { font-size: 0.9rem; } 
+    }
   }
   .contact-section .btn-whatsapp { font-size: 1.2rem; padding: 16px 32px; }
   .luxury-footer .footer-content { flex-direction: column; gap: 24px; text-align: center; }
+
+  /* Testimonials Native Swipe on Mobile */
+  .marquee-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    mask-image: none;
+    -webkit-mask-image: none;
+    padding-bottom: 20px;
+    
+    &::-webkit-scrollbar { display: none; }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .marquee-track {
+    animation: none;
+    padding: 0 5vw;
+    gap: 16px;
+  }
+  
+  .testimonial-card {
+    scroll-snap-align: center;
+    width: 85vw;
+    max-width: 350px;
+  }
 }
