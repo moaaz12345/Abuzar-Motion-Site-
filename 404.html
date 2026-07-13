@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>404 - Page Not Found | Abuzar Javed</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="./src/style.scss" />
+    <style>
+      .error-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 20px;
+      }
+      .error-page h1 {
+        font-size: clamp(6rem, 15vw, 10rem);
+        background: linear-gradient(135deg, var(--accent), var(--coral));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+        line-height: 1;
+      }
+      .error-page h2 {
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        margin: 20px 0;
+      }
+      .error-page p {
+        color: var(--text-muted);
+        max-width: 500px;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Floating Header -->
+    <header class="luxury-header" id="main-header">
+      <div class="logo">
+        <img src="/logo-no-bg.png" alt="Abuzar Motion" />
+        <span class="logo-text">Abuzar Javed</span>
+      </div>
+      <nav>
+        <a href="/index.html">Home</a>
+        <a href="/works.html">Work</a>
+        <a href="https://wa.me/923018903542" target="_blank">Contact</a>
+      </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme">
+        <i class="ph-fill ph-moon" id="theme-icon"></i>
+      </button>
+    </header>
+
+    <main class="error-page">
+      <h1>404</h1>
+      <h2>Lost in the Render Queue</h2>
+      <p>The page you're looking for doesn't exist or has been moved. Let's get you back to the main timeline.</p>
+      <a href="/index.html" class="hero-cta hero-cta--primary">Return Home <i class="ph-bold ph-arrow-right"></i></a>
+    </main>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="google-site-verification" content="_oE13uLBDg84IadQ7R3gHEn7F3zff1OrdtKqGlety2M" />
     
     <!-- Primary Meta Tags -->
@@ -65,21 +65,35 @@
     <link rel="stylesheet" href="./src/style.scss" />
   </head>
   <body>
+    <noscript>
+      <style>
+        #scroller { height: auto !important; overflow: visible !important; }
+        body, html { overflow: auto !important; }
+      </style>
+    </noscript>
+
+    <!-- CUSTOM AE CURSOR -->
+    <div class="cursor-blade" id="cursor-blade">
+      <div class="cursor-blade__slash"></div>
+      <div class="cursor-blade__dot"></div>
+    </div>
     <div class="cursor-glow"></div>
-    
+
     <!-- Floating Header -->
-    <header class="luxury-header">
+    <header class="luxury-header" id="main-header">
       <div class="logo">
         <img src="/logo-no-bg.png" alt="Abuzar Motion" />
         <span class="logo-text">Abuzar Javed</span>
       </div>
       <nav>
         <a href="/index.html">Home</a>
-        <a href="#about">About</a>
-        <a href="#experience">Services</a>
+        <a href="/index.html#about">About</a>
         <a href="/works.html">Work</a>
         <a href="https://wa.me/923018903542" target="_blank">Contact</a>
       </nav>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark theme">
+        <i class="ph-fill ph-moon" id="theme-icon"></i>
+      </button>
     </header>
 
     <!-- Smooth Scroll Wrapper -->

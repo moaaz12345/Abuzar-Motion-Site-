@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://abuzarmotion.com/sitemap.xml
+Sitemap: https://abuzarjaved.com/sitemap.xml
